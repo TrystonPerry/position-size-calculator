@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Position Size Calculator</title>
+  </head>
+  <body>
+    <div class="container">
+      <label>
+        Account Size ($)
+        <input type="text" id="as" placeholder="1000" />
+      </label>
+      <label>
+        Risk (%)
+        <input type="text" id="r" placeholder="0.03" />
+      </label>
+      <label>
+        Stop Loss (%)
+        <input type="text" id="sl" placeholder="0.05" />
+      </label>
+      <label>
+        Position Size ($)
+        <input type="text" id="ps" disabled />
+      </label>
+      <label>
+        Position Risk ($)
+        <input type="text" id="pr" disabled />
+      </label>
+    </div>
+  </body>
+
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+
+    label input {
+      display: block;
+      padding: 0.25rem;
+      font-size: 1.25rem;
+    }
+  </style>
+
+  <script>
+    const as = document.getElementById("as");
+    const r = document.getElementById("r");
+    const sl = document.getElementById("sl");
+    const ps = document.getElementById("ps");
+    const pr = document.getElementById("pr");
+    as.addEventListener("input", onChange);
+    r.addEventListener("input", onChange);
+    sl.addEventListener("input", onChange);
+
+    function onChange() {
+      ps.value = (as.value * r.value) / sl.value;
+      pr.value = ps.value * sl.value;
+    }
+  </script>
+</html>
