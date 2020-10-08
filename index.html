@@ -13,11 +13,11 @@
       </label>
       <label>
         Risk (%)
-        <input type="text" id="r" placeholder="0.03" />
+        <input type="text" id="r" placeholder="3" />
       </label>
       <label>
         Stop Loss (%)
-        <input type="text" id="sl" placeholder="0.05" />
+        <input type="text" id="sl" placeholder="5" />
       </label>
       <label>
         Position Size ($)
@@ -60,8 +60,8 @@
     sl.addEventListener("input", onChange);
 
     function onChange() {
-      ps.value = (as.value * r.value) / sl.value;
-      pr.value = ps.value * sl.value;
+      ps.value = (as.value * (r.value / 100)) / (sl.value / 100);
+      pr.value = ps.value * (sl.value / 100);
     }
   </script>
 </html>
