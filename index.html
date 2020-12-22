@@ -9,23 +9,31 @@
     <div class="container">
       <label>
         Account Size ($)
-        <input type="text" id="as" placeholder="1000" />
+        <input type="number" id="as" placeholder="1000" />
+      </label>
+      <label>
+        Collateral ($)
+        <input type="number" id="c" placeholder="100" />
       </label>
       <label>
         Risk (%)
-        <input type="text" id="r" placeholder="3" />
+        <input type="number" id="r" placeholder="3" />
       </label>
       <label>
         Stop Loss (%)
-        <input type="text" id="sl" placeholder="5" />
+        <input type="number" id="sl" placeholder="5" />
       </label>
       <label>
         Position Size ($)
-        <input type="text" id="ps" disabled />
+        <input type="number" id="ps" disabled />
+      </label>
+      <label>
+        Leverage (X)
+        <input type="number" id="l" disabled />
       </label>
       <label>
         Position Risk ($)
-        <input type="text" id="pr" disabled />
+        <input type="number" id="pr" disabled />
       </label>
     </div>
   </body>
@@ -51,17 +59,32 @@
 
   <script>
     const as = document.getElementById("as");
+    const c = document.getElementById("c");
     const r = document.getElementById("r");
     const sl = document.getElementById("sl");
     const ps = document.getElementById("ps");
+    const l = document.getElementById("l");
     const pr = document.getElementById("pr");
     as.addEventListener("input", onChange);
+    c.addEventListener("input", onChange);
     r.addEventListener("input", onChange);
     sl.addEventListener("input", onChange);
 
+    as.focus();
+
     function onChange() {
-      ps.value = (as.value * (r.value / 100)) / (sl.value / 100);
-      pr.value = ps.value * (sl.value / 100);
+      localStorage.setItem("account-size", as.value);
+      localStorage.setItem("collateral", c.value);
+      localStorage.setItem("risk", r.value);
+
+      ps.value = ((as.value * (r.value / 100)) / (sl.value / 100)).toFixed(2);
+      l.value = (ps.value / (c.value || 1)).toFixed(2);
+      pr.value = (ps.value / (sl.value / 100)).toFixed(2);
     }
+
+    as.value = localStorage.getItem("account-size");
+    c.value = localStorage.getItem("collateral");
+    r.value = localStorage.getItem("risk");
+    onChange()
   </script>
 </html>
