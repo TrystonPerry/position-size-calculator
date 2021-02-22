@@ -79,7 +79,7 @@
 
       ps.value = ((as.value * (r.value / 100)) / (sl.value / 100)).toFixed(2);
       l.value = (ps.value / (c.value || 1)).toFixed(2);
-      pr.value = (ps.value / (sl.value / 100)).toFixed(2);
+      pr.value = (as.value * (r.value / 100)).toFixed(2);
     }
 
     as.value = localStorage.getItem("account-size");
